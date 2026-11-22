@@ -5,9 +5,17 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef enum { STATUS_TRIAGEM, STATUS_PENDENTE, STATUS_ATENDIMENTO, STATUS_CONCLUIDO } Status;
-typedef enum { PRIORIDADE_BAIXA, PRIORIDADE_MEDIA, PRIORIDADE_ALTA, PRIORIDADE_CRITICA } Prioridade;
-typedef enum { CAT_HARDWARE, CAT_SOFTWARE, CAT_REDE, CAT_ACESSO, CAT_OUTROS } Categoria;
+typedef enum { 
+    STATUS_TRIAGEM, STATUS_PENDENTE, STATUS_ATENDIMENTO, STATUS_CONCLUIDO 
+} Status;
+
+typedef enum { 
+    PRIORIDADE_BAIXA, PRIORIDADE_MEDIA, PRIORIDADE_ALTA, PRIORIDADE_CRITICA 
+} Prioridade;
+
+typedef enum { 
+    CAT_HARDWARE, CAT_SOFTWARE, CAT_REDE, CAT_ACESSO, CAT_OUTROS 
+} Categoria;
 
 typedef struct Evento {
     char descricao[192];

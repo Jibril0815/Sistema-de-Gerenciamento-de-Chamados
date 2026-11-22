@@ -1,7 +1,12 @@
 #ifndef HEAP_H
 #define HEAP_H
 #include "chamado.h"
-typedef struct { Chamado **itens; size_t tamanho, capacidade; } Heap;
+
+typedef struct { 
+    Chamado **itens; 
+    size_t tamanho, capacidade; 
+} Heap;
+
 void heap_inicializar(Heap *heap);
 bool heap_reservar(Heap *heap, size_t minimo);
 bool heap_inserir(Heap *heap, Chamado *chamado);

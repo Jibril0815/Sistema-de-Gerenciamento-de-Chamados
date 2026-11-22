@@ -4,7 +4,15 @@
 #include "hash.h"
 #include "heap.h"
 #include "pilha.h"
-typedef struct { Fila triagem; Heap pendentes; Hash registros; Pilha alteracoes; uint64_t proximo_id, proxima_ordem; } Sistema;
+
+typedef struct { 
+    Fila triagem; 
+    Heap pendentes; 
+    Hash registros; 
+    Pilha alteracoes; 
+    uint64_t proximo_id, proxima_ordem; 
+} Sistema;
+
 void sistema_inicializar(Sistema *sistema);
 void sistema_destruir(Sistema *sistema);
 Chamado *sistema_cadastrar(Sistema *sistema, const char *solicitante, const char *titulo, const char *descricao);
