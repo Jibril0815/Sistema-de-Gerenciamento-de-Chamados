@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <inttypes.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gerenciamento.h"
@@ -22,7 +23,7 @@ bool sistema_triar_proximo(Sistema *s,Categoria cat,Prioridade pr){
     if(!heap_reservar(&s->pendentes,s->pendentes.tamanho+1))return false;
     if(!historico_adicionar(c,"Chamado triado e enviado para a fila de prioridade"))return false;
     c->categoria=cat;c->prioridade=pr;c->status=STATUS_PENDENTE;
-    if(!heap_inserir(&s->pendentes,c)){c->status=STATUS_TRIAGEM;historico_destruir(c);return false;}
+    if(!heap_inserir(&s->pendentes,c)){c->status=STATUS_TRIAGEM;return false;}
     (void)fila_desenfileirar(&s->triagem);return true;
 }
 Chamado *sistema_iniciar_proximo(Sistema *s){
@@ -38,8 +39,8 @@ static bool alterar(Sistema *s,uint64_t id,bool cat,int valor){
     Chamado *c=hash_buscar(&s->registros,id);if(!c||c->status!=STATUS_PENDENTE)return false;
     if(cat){if(valor<0||valor>CAT_OUTROS)return false;if(c->categoria==(Categoria)valor)return true;}
     else{if(valor<0||valor>PRIORIDADE_CRITICA)return false;if(c->prioridade==(Prioridade)valor)return true;}
-    if(!historico_adicionar(c,cat?"Categoria alterada":"Prioridade alterada"))return false;
-    if(!pilha_empilhar(&s->alteracoes,c,c->categoria,c->prioridade,cat)){free(c->historico_fim);c->historico_fim=NULL;return false;}
+    if(!pilha_empilhar(&s->alteracoes,c,c->categoria,c->prioridade,cat))return false;
+    if(!historico_adicionar(c,cat?"Categoria alterada":"Prioridade alterada")){Alteracao *a=pilha_desempilhar(&s->alteracoes);free(a);return false;}
     if(cat)c->categoria=(Categoria)valor;else{c->prioridade=(Prioridade)valor;(void)heap_reordenar(&s->pendentes,c);}return true;
 }
 bool sistema_alterar_categoria(Sistema *s,uint64_t id,Categoria c){return alterar(s,id,true,(int)c);}
