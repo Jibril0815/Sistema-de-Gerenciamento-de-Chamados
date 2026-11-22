@@ -11,7 +11,7 @@ typedef struct {
     Hash registros; 
     Pilha alteracoes; 
     uint64_t proximo_id, proxima_ordem; 
-} Sistema;
+} Sistema; // Estrutura para representar o sistema de gerenciamento de chamados
 
 void sistema_inicializar(Sistema *sistema);
 void sistema_destruir(Sistema *sistema);
