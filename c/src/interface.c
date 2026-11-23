@@ -8,14 +8,17 @@
 
 static bool linha(const char *prompt, char *b, size_t n) {
     printf("%s", prompt);
+    // fgets tenta ler uma linha inteira dentro do tamanho informado.
     if (!fgets(b, (int) n, stdin)) {
         return false;
     }
 
+    // Remove o caractere de quebra de linha capturado pelo fgets.
     size_t l = strlen(b);
     if (l && b[l - 1] == '\n') {
         b[l - 1] = '\0';
     } else {
+        // Se a entrada foi maior que o vetor, descarta o restante da linha.
         int ch;
         while ((ch = getchar()) != '\n' && ch != EOF) {
         }
@@ -28,12 +31,16 @@ static bool numero(const char *p, uint64_t *v) {
     char b[64];
     char *fim;
 
+    // Le uma linha e rejeita diretamente valores negativos.
     if (!linha(p, b, sizeof b) || b[0] == '-') {
         return false;
     }
 
     errno = 0;
+    // Converte o texto decimal em um valor inteiro sem sinal.
     unsigned long long x = strtoull(b, &fim, 10);
+
+    // Permite espacos apos o numero, mas nao permite texto adicional.
     while (isspace((unsigned char) *fim)) {
         fim++;
     }
@@ -48,6 +55,7 @@ static bool numero(const char *p, uint64_t *v) {
 
 static bool escolha(const char *p, unsigned max, unsigned *v) {
     uint64_t x;
+    // Reaproveita a leitura numerica e verifica o limite da opcao.
     if (!numero(p, &x) || x > max) {
         return false;
     }
@@ -57,6 +65,7 @@ static bool escolha(const char *p, unsigned max, unsigned *v) {
 }
 
 static void mostrar(const Chamado *c) {
+    // A consulta nao pode mostrar dados quando o ID nao existe.
     if (!c) {
         puts("Chamado nao encontrado.");
         return;
@@ -91,6 +100,7 @@ void interface_executar(Sistema *s){
     Chamado *c;
 
     for (;;) {
+        // O menu e repetido ate o usuario informar a opcao zero.
         puts(
             "\n=== GERENCIAMENTO DE CHAMADOS ==="
             "\n1 Cadastrar"
@@ -119,6 +129,7 @@ void interface_executar(Sistema *s){
 
         switch (op) {
             case 1:
+                // Exige os tres campos antes de enviar os dados ao sistema.
                 if (!linha("Solicitante: ", nome, sizeof nome)
                     || !linha("Titulo: ", titulo, sizeof titulo)
                     || !linha("Descricao: ", desc, sizeof desc)) {
