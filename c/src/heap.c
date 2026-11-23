@@ -31,13 +31,15 @@ bool heap_reservar(Heap *h, size_t minimo) {
         cap *= 2;
     }
 
+    // Realloca o vetor de ponteiros para os chamados, aumentando a capacidade.
     Chamado **p = realloc(h->itens, cap * sizeof *p);
     if (!p) {
         return false;
     }
 
-    h->itens = p;
-    h->capacidade = cap;
+    h->itens = p; // Atualiza o ponteiro do vetor de itens para o novo 
+    //  endereço retornado pelo realloc
+    h->capacidade = cap; // Atualiza a capacidade do heap para o novo valor
 
     return true;
 }

@@ -2,8 +2,8 @@
 #define HEAP_H
 #include "chamado.h"
 
-//O heap é uma estrutura de dados que permite armazenar elementos de forma ordenada,
-//de modo que o maior elemento (ou o menor, dependendo da implementação) esteja sempre no topo. 
+// O heap é uma estrutura de dados que permite armazenar elementos de forma ordenada,
+// de modo que o maior elemento (ou o menor, dependendo da implementação) esteja sempre no topo. 
 // Neste caso, o heap é utilizado para gerenciar os chamados que estão aguardando atendimento,
 // garantindo que o chamado com maior prioridade seja atendido primeiro.
 

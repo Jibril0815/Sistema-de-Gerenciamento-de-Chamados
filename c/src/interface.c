@@ -25,7 +25,10 @@ static bool linha(const char *prompt, char *b, size_t n) {
     }
 
     return b[0] != '\0';
-}
+}// Função para ler uma linha de entrada do usuário, armazenando-a em um buffer 
+//  e removendo a quebra de linha. Retorna true se a leitura foi bem-sucedida e 
+//  false caso contrário. Se a entrada for maior que o tamanho do buffer, o restante
+// da linha é descartado.
 
 static bool numero(const char *p, uint64_t *v) {
     char b[64];
@@ -51,7 +54,8 @@ static bool numero(const char *p, uint64_t *v) {
 
     *v = (uint64_t) x;
     return true;
-}
+}// Função para ler uma linha de entrada do usuário, armazenando-a em um buffer 
+//  e removendo a quebra de linha.
 
 static bool escolha(const char *p, unsigned max, unsigned *v) {
     uint64_t x;
@@ -62,14 +66,15 @@ static bool escolha(const char *p, unsigned max, unsigned *v) {
 
     *v = (unsigned) x;
     return true;
-}
+}// Função para ler uma escolha numérica do usuário, garantindo que o valor esteja
+//  dentro do limite especificado. Retorna true se a leitura foi bem-sucedida
 
 static void mostrar(const Chamado *c) {
     // A consulta nao pode mostrar dados quando o ID nao existe.
     if (!c) {
         puts("Chamado nao encontrado.");
         return;
-    }
+    }// Converte os enums em nomes legiveis e imprime todos os dados.
 
     printf(
         "\nID: %" PRIu64
@@ -87,7 +92,9 @@ static void mostrar(const Chamado *c) {
         c->titulo,
         c->descricao
     );
-}
+}// Função para exibir os detalhes de um chamado, incluindo ID, status, categoria, 
+//  prioridade, solicitante, título e descrição. Se o chamado não for encontrado, 
+//  exibe uma mensagem informando que o chamado não foi localizado.
 
 void interface_executar(Sistema *s){
     char nome[96];
@@ -239,4 +246,5 @@ void interface_executar(Sistema *s){
                 break;
         }
     }
-}
+}// Função principal da interface do usuário, que apresenta um menu de opções para 
+//  gerenciar chamados.
